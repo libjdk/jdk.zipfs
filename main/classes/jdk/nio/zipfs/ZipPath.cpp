@@ -285,7 +285,7 @@ void ZipPath::init$($ZipFileSystem* zfs, $bytes* path, bool normalized) {
 	$set(this, zfs, zfs);
 	if (normalized) {
 		$set(this, path, path);
-	} else if ($nc(zfs->zc)->isUTF8()) {
+	} else if ($nc($nc(zfs)->zc)->isUTF8()) {
 		$set(this, path, normalize(path));
 	} else {
 		$set(this, path, normalize($(zfs->getString(path))));

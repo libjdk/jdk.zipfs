@@ -1563,7 +1563,7 @@ $ZipFileAttributes* ZipFileSystem::getFileAttributes($bytes* path) {
 				$assign(var$2, $cast($ZipFileSystem$Entry, inode));
 				return$1 = true;
 				goto $finally;
-			} else if (inode->pos == -1) {
+			} else if ($nc(inode)->pos == -1) {
 				$var($ZipFileSystem$Entry, e, this->supportPosix ? static_cast<$ZipFileSystem$Entry*>($new($ZipFileSystem$PosixEntry, this, inode->name$, inode->isdir, 0)) : $new($ZipFileSystem$Entry, inode->name$, inode->isdir, 0));
 				$nc(e)->mtime = (e->atime = (e->ctime = this->zfsDefaultTimeStamp));
 				$assign(var$2, e);
@@ -1999,7 +1999,7 @@ $OutputStream* ZipFileSystem::newOutputStream($bytes* path, $OpenOptionArray* op
 	bool hasTruncate = false;
 	{
 		$var($OpenOptionArray, arr$, options);
-		int32_t len$ = arr$->length;
+		int32_t len$ = $nc(arr$)->length;
 		int32_t i$ = 0;
 		for (; i$ < len$; ++i$) {
 			$var($OpenOption, opt, arr$->get(i$));
@@ -2340,7 +2340,7 @@ $FileChannel* ZipFileSystem::newFileChannel($bytes* path, $Set* options$renamed,
 				}
 				$assign(options, $new($HashSet, static_cast<$Collection*>(options)));
 				options->remove($StandardOpenOption::CREATE_NEW);
-			} else if (e == nullptr || e->isDir()) {
+			} else if (e == nullptr || $nc(e)->isDir()) {
 				$throwNew($NoSuchFileException, $(getString(path)));
 			}
 			bool isFCH = (e != nullptr && e->type == $ZipFileSystem$Entry::FILECH);
@@ -2609,7 +2609,7 @@ void ZipFileSystem::buildNodeTree() {
 			$nc(this->inodes)->put(root, root);
 			{
 				$var($ZipFileSystem$IndexNodeArray, arr$, nodes);
-				int32_t len$ = arr$->length;
+				int32_t len$ = $nc(arr$)->length;
 				int32_t i$ = 0;
 				for (; i$ < len$; ++i$) {
 					$var($ZipFileSystem$IndexNode, node, arr$->get(i$));
@@ -3274,7 +3274,7 @@ $InputStream* ZipFileSystem::getInputStream($ZipFileSystem$Entry* e) {
 	} else {
 		$assign(eis, $new($ZipFileSystem$EntryInputStream, this, e));
 	}
-	if (e->method$ == 8) {
+	if ($nc(e)->method$ == 8) {
 		int64_t bufSize = e->size$ + 2;
 		if (bufSize > 0x00010000) {
 			bufSize = 8192;
